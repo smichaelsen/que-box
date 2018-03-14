@@ -2,10 +2,6 @@ index:
     path: /
     controller: App\Controller\DefaultController::indexAction
 
-firstRun:
-    path: /firstRun
-    controller: App\Controller\DefaultController::firstRunAction
-
 cycle:
     path: /cycle/{subjectId}
     controller: App\Controller\CycleController::cycleAction
@@ -25,3 +21,7 @@ cards:
 addSubject:
     path: /addSubject
     controller: App\Controller\SubjectController::addAction
+
+addCard:
+    path: /addCard/{subjectId}
+    controller: App\Controller\CardController::addAction

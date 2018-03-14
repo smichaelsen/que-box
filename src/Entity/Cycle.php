@@ -63,6 +63,11 @@ class Cycle
         $this->card = $card;
     }
 
+    public function getCompleted(): ?\DateTime
+    {
+        return $this->completed;
+    }
+
     public function getResult(): ?int
     {
         if ($this->result === null) {

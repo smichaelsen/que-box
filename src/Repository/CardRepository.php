@@ -18,4 +18,15 @@ class CardRepository extends EntityRepository
         ;
         return $query->execute();
     }
+
+    public function sumScore(Subject $subject): int
+    {
+        $sum = $this->createQueryBuilder('ca')
+            ->andWhere('ca.subject = :subject')
+            ->setParameter('subject', $subject)
+            ->select('SUM(ca.score) as totalScore')
+            ->getQuery()->execute()
+        ;
+        return (int) $sum[0]['totalScore'];
+    }
 }

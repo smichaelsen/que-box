@@ -2,10 +2,16 @@
 
 {% block body %}
     {% for subject in subjects %}
-        <h2>{{ subject.title }}</h2>
+        <h2>{{ subject.entity.title }}</h2>
         <p>
-            <a href="{{ path('cycle', {subjectId:subject.id}) }}">Lernen</a><br>
-            <a href="{{ path('cards', {subjectId:subject.id}) }}">Karten verwalten</a><br>
+            {{ subject.stats.cardsCount }} Vokabeln<br>
+            {{ subject.stats.score }} Punkte<br>
+            {% if subject.stats.lastCycleTime %}
+                Zuletzt gelernt: {{ subject.stats.lastCycleTime|date("d.m.Y H:i") }}<br>
+            {% endif %}
+            <a href="{{ path('cycle', {subjectId:subject.entity.id}) }}">Lernen</a><br>
+            <a href="{{ path('addCard', {subjectId:subject.entity.id}) }}">Karten hinzufügen</a><br>
+            <a href="{{ path('cards', {subjectId:subject.entity.id}) }}">Karten verwalten</a><br>
         </p>
     {% endfor %}
     <a href="{{ path('addSubject') }}">Neues Fach anlegen</a>
