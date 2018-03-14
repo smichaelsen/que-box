@@ -42,6 +42,12 @@ class Card
      */
     private $score = 0;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $subject;
+
     public function __construct()
     {
         $this->created = new \DateTime('now');
@@ -85,6 +91,16 @@ class Card
     public function getScore(): int
     {
         return (int) $this->score;
+    }
+
+    public function getSubject(): ?Subject
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(Subject $subject): void
+    {
+        $this->subject = $subject;
     }
 
     public function succeed(): void

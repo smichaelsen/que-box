@@ -6,7 +6,7 @@
         {{ cycle.card.backsideContent }}
     </p>
     <p>
-        <a href="{{ path('cycleSucceed') }}">Succeed</a><br>
-        <a href="{{ path('cycleFail') }}">Fail</a><br>
+        <a href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Succeed</a><br>
+        <a href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Fail</a><br>
     </p>
 {% endblock body %}

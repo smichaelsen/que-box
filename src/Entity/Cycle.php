@@ -42,6 +42,12 @@ class Cycle
      */
     private $scoreChange;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $subject;
+
     public function getId(): int
     {
         return (int) $this->id;
@@ -63,6 +69,16 @@ class Cycle
             return null;
         }
         return (int) $this->result;
+    }
+
+    public function getSubject(): ?Subject
+    {
+        return $this->subject;
+    }
+
+    public function setSubject(Subject $subject): void
+    {
+        $this->subject = $subject;
     }
 
     public function succeed(): void

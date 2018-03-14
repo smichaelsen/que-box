@@ -11,25 +11,23 @@ class DefaultController extends BaseController
 
     public function indexAction(): Response
     {
-        $cardRepository = $this->getCardRepository();
-        $anyCard = $cardRepository->findOneBy([]);
-        if (!$anyCard instanceof Card) {
-            return $this->redirectToRoute('firstRun');
-        }
-        return $this->render('index.html.twig');
+        $viewVariables = [];
+        $subjects = $this->getSubjectRepository()->findAll();
+        $viewVariables['subjects'] = $subjects;
+        return $this->render('index.html.twig', $viewVariables);
     }
 
     public function firstRunAction(Request $request): Response
     {
         $viewVariables = [];
-        $newShop = new Card();
-        $form = $this->createForm(CardType::class, $newShop);
+        $newCard = new Card();
+        $form = $this->createForm(CardType::class, $newCard);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Card $card */
-            $shop = $form->getData();
+            $card = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $em->persist($shop);
+            $em->persist($card);
             $em->flush();
             return $this->redirectToRoute('index');
         }

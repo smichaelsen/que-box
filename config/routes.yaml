@@ -7,17 +7,21 @@ firstRun:
     controller: App\Controller\DefaultController::firstRunAction
 
 cycle:
-    path: /cycle
+    path: /cycle/{subjectId}
     controller: App\Controller\CycleController::cycleAction
 
 cycleFail:
-    path: /cycleFail
+    path: /cycleFail/{subjectId}
     controller: App\Controller\CycleController::cycleFailAction
 
 cycleSucceed:
-    path: /cycleSucceed
+    path: /cycleSucceed/{subjectId}
     controller: App\Controller\CycleController::cycleSucceedAction
 
 cards:
-    path: /cards
+    path: /cards/{subjectId}
     controller: App\Controller\DefaultController::cardsAction
+
+addSubject:
+    path: /addSubject
+    controller: App\Controller\SubjectController::addAction

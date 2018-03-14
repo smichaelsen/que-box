@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Card;
 use App\Entity\Cycle;
+use App\Entity\Subject;
 use App\Repository\CardRepository;
 use App\Repository\CycleRepository;
+use App\Repository\SubjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class BaseController extends Controller
@@ -25,4 +27,10 @@ abstract class BaseController extends Controller
         return $cycleRepository;
     }
 
+    protected function getSubjectRepository(): SubjectRepository
+    {
+        /** @var SubjectRepository $subjectRepository */
+        $subjectRepository = $this->getDoctrine()->getManager()->getRepository(Subject::class);
+        return $subjectRepository;
+    }
 }

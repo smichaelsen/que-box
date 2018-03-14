@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('cycle') }}">Lernen</a><br>
-    <a href="{{ path('cards') }}">Karten verwalten</a><br>
+    {% for subject in subjects %}
+        <h2>{{ subject.title }}</h2>
+        <p>
+            <a href="{{ path('cycle', {subjectId:subject.id}) }}">Lernen</a><br>
+            <a href="{{ path('cards', {subjectId:subject.id}) }}">Karten verwalten</a><br>
+        </p>
+    {% endfor %}
+    <a href="{{ path('addSubject') }}">Neues Fach anlegen</a>
 {% endblock body %}
