@@ -21,7 +21,7 @@ class DefaultController extends BaseController
                 'stats' => [
                     'cardsCount' => $this->getCardRepository()->count(['subject' => $subject]),
                     'score' => $this->getCardRepository()->sumScore($subject),
-                    'lastCycleTime' => $lastCycle->getCompleted(),
+                    'lastCycleTime' => $lastCycle instanceof Cycle ? $lastCycle->getCompleted() : null,
                 ]
             ];
         }
