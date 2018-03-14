@@ -1,0 +1,23 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::indexAction
+
+firstRun:
+    path: /firstRun
+    controller: App\Controller\DefaultController::firstRunAction
+
+cycle:
+    path: /cycle
+    controller: App\Controller\DefaultController::cycleAction
+
+cycleFail:
+    path: /cycleFail
+    controller: App\Controller\DefaultController::cycleFailAction
+
+cycleSucceed:
+    path: /cycleSucceed
+    controller: App\Controller\DefaultController::cycleSucceedAction
+
+cards:
+    path: /cards
+    controller: App\Controller\DefaultController::cardsAction

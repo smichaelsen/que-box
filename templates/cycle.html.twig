@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p>
+        {{ cycle.card.frontsideContent }}<br>
+        {{ cycle.card.backsideContent }}
+    </p>
+    <p>
+        <a href="{{ path('cycleSucceed') }}">Succeed</a><br>
+        <a href="{{ path('cycleFail') }}">Fail</a><br>
+    </p>
+{% endblock body %}
