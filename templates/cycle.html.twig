@@ -1,12 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <p>
-        {{ cycle.card.frontsideContent }}<br>
-        {{ cycle.card.backsideContent }}
-    </p>
-    <p>
-        <a href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Succeed</a><br>
-        <a href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Fail</a><br>
-    </p>
+    <div class="revealable-card vocabulary-card">
+        <div class="revealable-card__flipper">
+            <div class="revealable-card__front vocabulary-card__face">
+                <p class="vocabulary-card__question">{{ cycle.card.frontsideContent }}</p>
+                <a data-reveal href="#">Lösung zeigen</a>
+            </div>
+            <div class="revealable-card__back vocabulary-card__face">
+                <p class="vocabulary-card__answer">{{ cycle.card.backsideContent }}</p>
+                <p>
+                    <a class="btn btn--success" href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Succeed</a>
+                    <a class="btn btn--failure" href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Fail</a>
+                </p>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
