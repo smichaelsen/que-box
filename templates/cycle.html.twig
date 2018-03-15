@@ -4,11 +4,11 @@
     <div class="revealable-card vocabulary-card">
         <div class="revealable-card__flipper">
             <div class="revealable-card__front vocabulary-card__face">
-                <p class="vocabulary-card__question">{{ cycle.card.frontsideContent }}</p>
+                <p class="vocabulary-card__question">{{ cycle.question }}</p>
                 <a data-reveal href="#">Lösung zeigen</a>
             </div>
             <div class="revealable-card__back vocabulary-card__face">
-                <p class="vocabulary-card__answer">{{ cycle.card.backsideContent }}</p>
+                <p class="vocabulary-card__answer">{{ cycle.answer }}</p>
                 <p>
                     <a class="btn btn--success" href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Richtig</a>
                     <a class="btn btn--failure" href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Falsch</a>

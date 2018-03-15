@@ -18,6 +18,12 @@ class Cycle
     protected $completed;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Card")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $card;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
@@ -25,15 +31,14 @@ class Cycle
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Card")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $card;
-
-    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $result;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $reversed;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -74,6 +79,16 @@ class Cycle
         return (int)$this->result;
     }
 
+    public function isReversed(): bool
+    {
+        return (bool)$this->reversed;
+    }
+
+    public function setReversed(bool $reversed): void
+    {
+        $this->reversed = $reversed;
+    }
+
     public function getSubject(): ?Subject
     {
         return $this->subject;
@@ -98,5 +113,21 @@ class Cycle
         $this->scoreChange = -$this->getCard()->getScore();
         $this->getCard()->fail();
         $this->completed = new \DateTime('now');
+    }
+
+    public function getQuestion(): string
+    {
+        if ($this->isReversed()) {
+            return $this->getCard()->getBacksideContent();
+        }
+        return $this->getCard()->getFrontsideContent();
+    }
+
+    public function getAnswer(): string
+    {
+        if ($this->isReversed()) {
+            return $this->getCard()->getFrontsideContent();
+        }
+        return $this->getCard()->getBacksideContent();
     }
 }

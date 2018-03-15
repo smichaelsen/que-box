@@ -1,8 +1,23 @@
+@mixin contained() {
+  width: 90%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #ddeeff;
   margin: 0;
   padding: 0;
   font-family: Helvetica, sans-serif;
+}
+
+h2 {
+  @include contained;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .revealable-card {
@@ -34,8 +49,8 @@ body {
 }
 
 .vocabulary-card {
+  @include contained;
   margin: 20px auto;
-  width: 50%;
   height: 480px;
   &__face {
     background-color: #f9ce61;
@@ -51,4 +66,29 @@ a.btn {
   display: inline-block;
   padding: 5px 10px;
   text-decoration: none;
+}
+
+.paper {
+  @include contained;
+  background-image: url("images/paper.png");
+  font-family: 'Caveat', cursive;
+  margin: 20px auto;
+  padding: 20px;
+  font-size: 21px;
+  line-height: 30px;
+}
+
+.view-summary {
+  @include contained;
+  margin-bottom: 15px;
+}
+
+table {
+  @include contained;
+  td {
+    border-bottom: 1px solid lightgray;
+  }
+  tr:first-child td {
+    border-top: 1px solid lightgray;
+  }
 }

@@ -110,6 +110,9 @@ class CycleController extends BaseController
         $cycle = new Cycle();
         $cycle->setCard($card);
         $cycle->setSubject($subject);
+        if ($subject->getType() === Subject::TYPE_LANGUAGE) {
+            $cycle->setReversed((\mt_rand(0, 1) === 1));
+        }
         return $cycle;
     }
 

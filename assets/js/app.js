@@ -1,4 +1,5 @@
 require('../css/app.scss');
+require('../images/paper.png');
 
 function ready(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
