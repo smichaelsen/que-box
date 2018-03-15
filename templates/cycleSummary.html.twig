@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Zusammenfassung</h2>
+    <p>Diese Vokabeln sollten jetzt richtig auf deinem Zettel stehen:</p>
+    {% for cycle in cyclesCompletedToday.succeeded %}
+        {{ cycle.card.backsideContent }}<br>
+    {% endfor %}
+
+    <p>Diese Vokabeln hattest du heute falsch:</p>
+    {% for cycle in cyclesCompletedToday.failed %}
+        {{ cycle.card.frontsideContent }} => {{ cycle.card.backsideContent }}<br>
+    {% endfor %}
+{% endblock body %}

@@ -20,6 +20,11 @@ class Subject
     private $id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $targetCyclesPerDay;
+
+    /**
      * @ORM\Column(type="string")
      */
     private $title;
@@ -32,6 +37,16 @@ class Subject
     public function getId(): int
     {
         return (int)$this->id;
+    }
+
+    public function getTargetCyclesPerDay(): int
+    {
+        return (int)$this->targetCyclesPerDay;
+    }
+
+    public function setTargetCyclesPerDay(int $targetCyclesPerDay): void
+    {
+        $this->targetCyclesPerDay = $targetCyclesPerDay;
     }
 
     public function getTitle(): string

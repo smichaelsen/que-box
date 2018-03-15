@@ -32,27 +32,66 @@ class CycleController extends BaseController
 
     public function cycleSucceedAction(int $subjectId): Response
     {
-        /** @var Subject $subject */
-        $subject = $this->getSubjectRepository()->find($subjectId);
-        $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
-        \assert($cycle instanceof Cycle, 'Cycle to succeed could not be loaded');
-        $cycle->succeed();
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($cycle);
-        $em->flush();
-        return $this->redirectToRoute('cycle', ['subjectId' => $subject->getId()]);
+        return $this->completeCycle($subjectId, 'succeed');
     }
 
     public function cycleFailAction(int $subjectId): Response
     {
+        return $this->completeCycle($subjectId, 'fail');
+    }
+
+    public function cycleSummaryAction(int $subjectId): Response
+    {
+        /** @var Subject $subject */
+        $subject = $this->getSubjectRepository()->find($subjectId);
+        $viewVariables = [];
+        $cyclesCompletedToday = $this->getCycleRepository()->getCyclesCompletedToday($subject);
+        $viewVariables['cyclesCompletedToday'] = [
+            'succeeded' => \array_filter($cyclesCompletedToday, static function (Cycle $cycle) {
+                return $cycle->getResult() === Cycle::RESULT_SUCCESS;
+            }),
+            'failed' => \array_filter($cyclesCompletedToday, static function (Cycle $cycle) {
+                return $cycle->getResult() === Cycle::RESULT_FAILURE;
+            }),
+        ];
+        return $this->render('cycleSummary.html.twig', $viewVariables);
+    }
+
+    protected function completeCycle(int $subjectId, string $verb): Response
+    {
+        \assert(\in_array($verb, ['succeed', 'fail'], true), 'Verb has to be succeed or fail');
         /** @var Subject $subject */
         $subject = $this->getSubjectRepository()->find($subjectId);
         $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
         \assert($cycle instanceof Cycle, 'Cycle to fail could not be loaded');
-        $cycle->fail();
+        if ($verb === 'succeed') {
+            $cycle->succeed();
+        } else {
+            $cycle->fail();
+        }
         $em = $this->getDoctrine()->getManager();
         $em->persist($cycle);
         $em->flush();
+        $cyclesCompletedToday = $this->getCycleRepository()->countCyclesCompletedToday($subject);
+        $cardsNotCycledToday = $this->getCardRepository()->findCardsNotCycledToday($subject);
+
+        /**
+         * show summary if
+         * - the target cycles per day are reached
+         * - after that another half of the target is reached
+         * - no cards are left to cycle
+         */
+        if (
+            $cyclesCompletedToday === $subject->getTargetCyclesPerDay() ||
+            (
+                $cyclesCompletedToday > $subject->getTargetCyclesPerDay() &&
+                (int)(($cyclesCompletedToday - $subject->getTargetCyclesPerDay()) % \ceil($subject->getTargetCyclesPerDay() / 2)) === 0
+            ) ||
+            \count($cardsNotCycledToday) === 0
+        ) {
+            return $this->redirectToRoute('cycleSummary', ['subjectId' => $subject->getId()]);
+        }
+
         return $this->redirectToRoute('cycle', ['subjectId' => $subject->getId()]);
     }
 

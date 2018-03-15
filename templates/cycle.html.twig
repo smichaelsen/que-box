@@ -10,8 +10,8 @@
             <div class="revealable-card__back vocabulary-card__face">
                 <p class="vocabulary-card__answer">{{ cycle.card.backsideContent }}</p>
                 <p>
-                    <a class="btn btn--success" href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Succeed</a>
-                    <a class="btn btn--failure" href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Fail</a>
+                    <a class="btn btn--success" href="{{ path('cycleSucceed', {subjectId:cycle.subject.id}) }}">Richtig</a>
+                    <a class="btn btn--failure" href="{{ path('cycleFail', {subjectId:cycle.subject.id}) }}">Falsch</a>
                 </p>
             </div>
         </div>
