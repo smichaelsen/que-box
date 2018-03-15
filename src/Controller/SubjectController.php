@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SubjectController extends BaseController
 {
-
     public function addAction(Request $request): Response
     {
         $viewVariables = [];

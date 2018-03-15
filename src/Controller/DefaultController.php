@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends BaseController
 {
-
     public function indexAction(): Response
     {
         $viewVariables = [];
@@ -22,7 +21,7 @@ class DefaultController extends BaseController
                     'cardsCount' => $this->getCardRepository()->count(['subject' => $subject]),
                     'score' => $this->getCardRepository()->sumScore($subject),
                     'lastCycleTime' => $lastCycle instanceof Cycle ? $lastCycle->getCompleted() : null,
-                ]
+                ],
             ];
         }
         $viewVariables['subjects'] = $subjects;

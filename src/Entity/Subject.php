@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subject
 {
-
     public const TYPE_LANGUAGE = 1;
 
     public const TYPE_QUESTIONS = 2;
@@ -32,12 +31,12 @@ class Subject
 
     public function getId(): int
     {
-        return (int) $this->id;
+        return (int)$this->id;
     }
 
     public function getTitle(): string
     {
-        return (string) $this->title;
+        return (string)$this->title;
     }
 
     public function setTitle(string $title): void
@@ -47,12 +46,12 @@ class Subject
 
     public function getType(): int
     {
-        return (int) $this->type;
+        return (int)$this->type;
     }
 
     public function setType(int $type): void
     {
-        assert(in_array($type, [self::TYPE_LANGUAGE, self::TYPE_QUESTIONS]));
+        \assert(\in_array($type, [self::TYPE_LANGUAGE, self::TYPE_QUESTIONS], true));
         $this->type = $type;
     }
 }

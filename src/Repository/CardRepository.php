@@ -14,8 +14,7 @@ class CardRepository extends EntityRepository
             ->setParameter('today', new \DateTime('today'))
             ->andWhere('ca.subject = :subject')
             ->setParameter('subject', $subject)
-            ->getQuery()
-        ;
+            ->getQuery();
         return $query->execute();
     }
 
@@ -25,8 +24,7 @@ class CardRepository extends EntityRepository
             ->andWhere('ca.subject = :subject')
             ->setParameter('subject', $subject)
             ->select('SUM(ca.score) as totalScore')
-            ->getQuery()->execute()
-        ;
-        return (int) $sum[0]['totalScore'];
+            ->getQuery()->execute();
+        return (int)$sum[0]['totalScore'];
     }
 }

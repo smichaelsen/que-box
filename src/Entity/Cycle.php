@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,10 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Cycle
 {
-
     public const RESULT_SUCCESS = 1;
 
     public const RESULT_FAILURE = 2;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $completed;
 
     /**
      * @ORM\Id
@@ -26,11 +29,6 @@ class Cycle
      * @ORM\JoinColumn(nullable=true)
      */
     private $card;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $completed;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -50,7 +48,7 @@ class Cycle
 
     public function getId(): int
     {
-        return (int) $this->id;
+        return (int)$this->id;
     }
 
     public function getCard(): Card
@@ -73,7 +71,7 @@ class Cycle
         if ($this->result === null) {
             return null;
         }
-        return (int) $this->result;
+        return (int)$this->result;
     }
 
     public function getSubject(): ?Subject
@@ -97,7 +95,7 @@ class Cycle
     public function fail(): void
     {
         $this->result = self::RESULT_FAILURE;
-        $this->scoreChange = - $this->getCard()->getScore();
+        $this->scoreChange = -$this->getCard()->getScore();
         $this->getCard()->fail();
         $this->completed = new \DateTime('now');
     }

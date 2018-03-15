@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -55,12 +54,12 @@ class Card
 
     public function getId(): int
     {
-        return (int) $this->id;
+        return (int)$this->id;
     }
 
     public function getBacksideContent(): string
     {
-        return (string) $this->backsideContent;
+        return (string)$this->backsideContent;
     }
 
     public function setBacksideContent(string $backsideContent): void
@@ -75,7 +74,7 @@ class Card
 
     public function getFrontsideContent(): string
     {
-        return (string) $this->frontsideContent;
+        return (string)$this->frontsideContent;
     }
 
     public function setFrontsideContent(string $frontsideContent): void
@@ -90,7 +89,7 @@ class Card
 
     public function getScore(): int
     {
-        return (int) $this->score;
+        return (int)$this->score;
     }
 
     public function getSubject(): ?Subject
@@ -122,6 +121,6 @@ class Card
         } else {
             $daysSinceLastCycle = 100;
         }
-        return (int) round(1000 * $daysSinceLastCycle / (($this->getScore()+1) ** 2));
+        return (int)\round(1000 * $daysSinceLastCycle / (($this->getScore() + 1) ** 2));
     }
 }

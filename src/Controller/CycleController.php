@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CycleController extends BaseController
 {
-
     public function cycleAction(int $subjectId): Response
     {
         /** @var Subject $subject */
@@ -36,7 +35,7 @@ class CycleController extends BaseController
         /** @var Subject $subject */
         $subject = $this->getSubjectRepository()->find($subjectId);
         $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
-        assert($cycle instanceof Cycle, 'Cycle to succeed could not be loaded');
+        \assert($cycle instanceof Cycle, 'Cycle to succeed could not be loaded');
         $cycle->succeed();
         $em = $this->getDoctrine()->getManager();
         $em->persist($cycle);
@@ -49,7 +48,7 @@ class CycleController extends BaseController
         /** @var Subject $subject */
         $subject = $this->getSubjectRepository()->find($subjectId);
         $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
-        assert($cycle instanceof Cycle, 'Cycle to fail could not be loaded');
+        \assert($cycle instanceof Cycle, 'Cycle to fail could not be loaded');
         $cycle->fail();
         $em = $this->getDoctrine()->getManager();
         $em->persist($cycle);
@@ -59,13 +58,13 @@ class CycleController extends BaseController
 
     /**
      * @param Subject $subject
-     * @return Cycle
      * @throws NoCardsAvailableException
+     * @return Cycle
      */
     protected function createNewCycle(Subject $subject): Cycle
     {
         $cardsNotCycledToday = $this->getCardRepository()->findCardsNotCycledToday($subject);
-        if (count($cardsNotCycledToday) === 0) {
+        if (\count($cardsNotCycledToday) === 0) {
             throw new NoCardsAvailableException();
         }
         $card = $this->pickACard($cardsNotCycledToday);
@@ -81,7 +80,7 @@ class CycleController extends BaseController
      */
     private function pickACard(array $cards): Card
     {
-        $totalWeight = array_reduce($cards, function (int $totalWeight, Card $card) {
+        $totalWeight = \array_reduce($cards, static function (int $totalWeight, Card $card) {
             $totalWeight += $card->getWeight();
             return $totalWeight;
         }, 0);

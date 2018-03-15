@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CardController extends BaseController
 {
-
     public function addAction(Request $request, int $subjectId): Response
     {
         /** @var Subject $subject */

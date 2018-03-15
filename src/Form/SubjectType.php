@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Form;
 
 use App\Entity\Subject;
@@ -12,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SubjectType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -21,7 +19,7 @@ class SubjectType extends AbstractType
                 'choices' => [
                     'Sprache' => Subject::TYPE_LANGUAGE,
                     'Fragen & Antworten' => Subject::TYPE_QUESTIONS,
-                ]
+                ],
             ]);
     }
 

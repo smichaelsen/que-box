@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Form;
 
 use App\Entity\Card;
@@ -11,7 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CardType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

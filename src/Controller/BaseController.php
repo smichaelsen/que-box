@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class BaseController extends Controller
 {
-
     protected function getCardRepository(): CardRepository
     {
         /** @var CardRepository $cardRepository */
