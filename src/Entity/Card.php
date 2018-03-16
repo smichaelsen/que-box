@@ -121,6 +121,6 @@ class Card
         } else {
             $daysSinceLastCycle = 100;
         }
-        return (int)\round(1000 * $daysSinceLastCycle / (($this->getScore() + 1) ** 2));
+        return (int)\ceil(1000 * $daysSinceLastCycle / (($this->getScore() + 1) ** 2));
     }
 }
