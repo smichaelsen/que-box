@@ -22,7 +22,7 @@ h2 {
 
 .revealable-card {
   perspective: 1000px;
-  &--revealed &__flipper {
+  .revealed &__flipper {
     transform: rotateY(180deg);
   }
   &__flipper {

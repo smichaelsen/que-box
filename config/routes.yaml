@@ -18,6 +18,10 @@ cycleSummary:
     path: /cycleSummary/{subjectId}
     controller: App\Controller\CycleController::cycleSummaryAction
 
+loadCycle:
+    path: /loadCycle/{subjectId}
+    controller: App\Controller\CycleController::loadCycleAction
+
 cards:
     path: /cards/{subjectId}
     controller: App\Controller\DefaultController::cardsAction
