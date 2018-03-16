@@ -1,6 +1,7 @@
 <?php
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,11 @@ class Subject
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $slug;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,6 +45,11 @@ class Subject
         return (int)$this->id;
     }
 
+    public function getSlug(): string
+    {
+        return (string)$this->slug;
+    }
+
     public function getTargetCyclesPerDay(): int
     {
         return (int)$this->targetCyclesPerDay;
@@ -57,6 +68,8 @@ class Subject
     public function setTitle(string $title): void
     {
         $this->title = $title;
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->title);
     }
 
     public function getType(): int

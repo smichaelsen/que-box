@@ -10,10 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CardController extends BaseController
 {
-    public function addAction(Request $request, int $subjectId): Response
+    public function addAction(Request $request, Subject $subject): Response
     {
-        /** @var Subject $subject */
-        $subject = $this->getSubjectRepository()->find($subjectId);
         $viewVariables = [];
         $newCard = new Card();
         $newCard->setSubject($subject);

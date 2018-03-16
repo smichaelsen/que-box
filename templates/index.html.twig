@@ -9,9 +9,9 @@
             {% if subject.stats.lastCycleTime %}
                 Zuletzt gelernt: {{ subject.stats.lastCycleTime|date("d.m.Y H:i") }}<br>
             {% endif %}
-            <a href="{{ path('cycle', {subjectId:subject.entity.id}) }}">Lernen</a><br>
-            <a href="{{ path('addCard', {subjectId:subject.entity.id}) }}">Karten hinzufügen</a><br>
-            <a href="{{ path('cards', {subjectId:subject.entity.id}) }}">Karten verwalten</a><br>
+            <a href="{{ path('cycle', {slug:subject.entity.slug}) }}">Lernen</a><br>
+            <a href="{{ path('addCard', {slug:subject.entity.slug}) }}">Karten hinzufügen</a><br>
+            <a href="{{ path('cards', {slug:subject.entity.slug}) }}">Karten verwalten</a><br>
         </p>
     {% endfor %}
     <a href="{{ path('addSubject') }}">Neues Fach anlegen</a>

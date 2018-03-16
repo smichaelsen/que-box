@@ -10,10 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CycleController extends BaseController
 {
-    public function cycleAction(int $subjectId): Response
+    public function cycleAction(Subject $subject): Response
     {
-        /** @var Subject $subject */
-        $subject = $this->getSubjectRepository()->find($subjectId);
         $viewVariables = [];
         $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
         if (!$cycle instanceof Cycle) {
@@ -30,20 +28,18 @@ class CycleController extends BaseController
         return $this->render('cycle.html.twig', $viewVariables);
     }
 
-    public function cycleSucceedAction(int $subjectId): Response
+    public function cycleSucceedAction(Subject $subject): Response
     {
-        return $this->completeCycle($subjectId, 'succeed');
+        return $this->completeCycle($subject, 'succeed');
     }
 
-    public function cycleFailAction(int $subjectId): Response
+    public function cycleFailAction(Subject $subject): Response
     {
-        return $this->completeCycle($subjectId, 'fail');
+        return $this->completeCycle($subject, 'fail');
     }
 
-    public function cycleSummaryAction(int $subjectId): Response
+    public function cycleSummaryAction(Subject $subject): Response
     {
-        /** @var Subject $subject */
-        $subject = $this->getSubjectRepository()->find($subjectId);
         $viewVariables = [];
         $cyclesCompletedToday = $this->getCycleRepository()->getCyclesCompletedToday($subject);
         $viewVariables['cyclesCompletedToday'] = [
@@ -57,11 +53,9 @@ class CycleController extends BaseController
         return $this->render('cycleSummary.html.twig', $viewVariables);
     }
 
-    protected function completeCycle(int $subjectId, string $verb): Response
+    protected function completeCycle(Subject $subject, string $verb): Response
     {
         \assert(\in_array($verb, ['succeed', 'fail'], true), 'Verb has to be succeed or fail');
-        /** @var Subject $subject */
-        $subject = $this->getSubjectRepository()->find($subjectId);
         $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
         \assert($cycle instanceof Cycle, 'Cycle to fail could not be loaded');
         if ($verb === 'succeed') {
@@ -89,7 +83,7 @@ class CycleController extends BaseController
             ) ||
             \count($cardsNotCycledToday) === 0
         ) {
-            return $this->redirectToRoute('cycleSummary', ['subjectId' => $subject->getId()]);
+            return $this->redirectToRoute('cycleSummary', ['slug' => $subject->getSlug()]);
         }
 
         return $this->redirectToRoute('cycle', ['subjectId' => $subject->getId()]);
