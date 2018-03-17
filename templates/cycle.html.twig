@@ -1,19 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="revealable-card vocabulary-card">
-        <div class="revealable-card__flipper">
-            <div class="revealable-card__front vocabulary-card__face">
-                <p class="vocabulary-card__question">{{ cycle.question }}</p>
-                <a data-reveal href="#">Lösung zeigen</a>
-            </div>
-            <div class="revealable-card__back vocabulary-card__face">
-                <p class="vocabulary-card__answer">{{ cycle.answer }}</p>
-                <p>
-                    <a class="btn btn--success" href="{{ path('cycleSucceed', {slug:cycle.subject.slug}) }}">Richtig</a>
-                    <a class="btn btn--failure" href="{{ path('cycleFail', {slug:cycle.subject.slug}) }}">Falsch</a>
-                </p>
-            </div>
-        </div>
+
+    <script type="text/javascript">
+        window.initialCycleData = {
+            {{ cycle.id }}: {
+                question: "{{ cycle.question }}",
+                answer: "{{ cycle.answer }}"
+            }
+        };
+    </script>
+
+    <div data-cycle="{{ cycle.id }}">
     </div>
+
 {% endblock body %}

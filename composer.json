@@ -47,11 +47,6 @@
             "App\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\Tests\\": "tests/"
-        }
-    },
     "replace": {
         "symfony/polyfill-iconv": "*",
         "symfony/polyfill-php71": "*",

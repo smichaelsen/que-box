@@ -1,16 +1,17 @@
 {
-    "devDependencies": {
-        "@symfony/webpack-encore": "^0.17.0",
-        "node-sass": "^4.7.2",
-        "sass-loader": "^6.0.7",
-        "materialize-loader": "^2.0.1"
+    "name": "que-box",
+    "dependencies": {
+        "autoprefixer": "^7.1.1",
+        "cssnano": "^3.10.0",
+        "grunt": "~1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-uglify": "^3.0.1",
+        "grunt-postcss": "^0.8.0",
+        "grunt-sass": "^2.0.0",
+        "grunt-shell": "^2.1.0",
+        "handlebars": "^4.0.11"
     },
-    "license": "UNLICENSED",
-    "private": true,
-    "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production"
+    "devDependencies": {
+        "grunt-contrib-watch": "^1.0.0"
     }
 }
