@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Entity\Cycle;
 use App\Entity\Subject;
-use App\Error\NoCardsAvailableException;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Response;
 
 class CycleController extends BaseController
@@ -13,18 +13,30 @@ class CycleController extends BaseController
     public function cycleAction(Subject $subject): Response
     {
         $viewVariables = [];
-        $cycle = $this->getCycleRepository()->findOneBy(['result' => null, 'subject' => $subject]);
-        if (!$cycle instanceof Cycle) {
-            try {
-                $cycle = $this->createNewCycle($subject);
-            } catch (NoCardsAvailableException $e) {
+        $this->getCycleRepository()->deleteUncompletedPastCycles($subject);
+        $activeCycles = $this->getCycleRepository()->getActiveCycles($subject);
+        if (\count($activeCycles) === 0) {
+            $cyclesToCreate = $subject->getTargetCyclesPerDay();
+            $cards = $this->getShuffledCards($subject, $cyclesToCreate);
+            if (\count($cards) === 0) {
                 return $this->render('noCycleAvailable.html.twig');
             }
             $em = $this->getDoctrine()->getManager();
-            $em->persist($cycle);
+            foreach ($cards as $card) {
+                $cycle = $this->createNewCycle($subject, $card);
+                $em->persist($cycle);
+                $activeCycles[] = $cycle;
+            }
             $em->flush();
         }
-        $viewVariables['cycle'] = $cycle;
+        $cyclesData = [];
+        foreach ($activeCycles as $activeCycle) {
+            $cyclesData[] = [
+                'question' => $activeCycle->getQuestion(),
+                'answer' => $activeCycle->getAnswer(),
+            ];
+        }
+        $viewVariables['cyclesData'] = \json_encode($cyclesData);
         return $this->render('cycle.html.twig', $viewVariables);
     }
 
@@ -91,23 +103,24 @@ class CycleController extends BaseController
 
     /**
      * @param Subject $subject
-     * @throws NoCardsAvailableException
-     * @return Cycle
+     * @param int $limit
+     * @return array|Card[]
      */
-    protected function createNewCycle(Subject $subject): Cycle
+    protected function getShuffledCards(Subject $subject, int $limit = 0): array
     {
-        $cardsNotCycledToday = $this->getCardRepository()->findCardsNotCycledToday($subject);
-        if (\count($cardsNotCycledToday) === 0) {
-            throw new NoCardsAvailableException();
+        $cardsPool = new ArrayCollection(
+            $this->getCardRepository()->findCardsNotCycledToday($subject)
+        );
+        $shuffledCards = [];
+        while (\count($cardsPool)) {
+            $card = $this->pickACard($cardsPool->toArray());
+            $cardsPool->removeElement($card);
+            $shuffledCards[] = $card;
+            if ($limit > 0 && \count($shuffledCards) > $limit) {
+                break;
+            }
         }
-        $card = $this->pickACard($cardsNotCycledToday);
-        $cycle = new Cycle();
-        $cycle->setCard($card);
-        $cycle->setSubject($subject);
-        if ($subject->getType() === Subject::TYPE_LANGUAGE) {
-            $cycle->setReversed((\mt_rand(0, 1) === 1));
-        }
-        return $cycle;
+        return $shuffledCards;
     }
 
     /**
@@ -129,5 +142,16 @@ class CycleController extends BaseController
         }
         // can not happen, the loop will always return a card
         return null;
+    }
+
+    private function createNewCycle(Subject $subject, Card $card): Cycle
+    {
+        $cycle = new Cycle();
+        $cycle->setCard($card);
+        $cycle->setSubject($subject);
+        if ($subject->getType() === Subject::TYPE_LANGUAGE) {
+            $cycle->setReversed((\mt_rand(0, 1) === 1));
+        }
+        return $cycle;
     }
 }

@@ -22,6 +22,13 @@ h2 {
 
 .revealable-card {
   perspective: 1000px;
+  transform: translateX(-100vw);
+  opacity: 0.5;
+  transition: all 200ms;
+  &--loaded {
+    transform: translateX(0);
+    opacity: 1;
+  }
   &--revealed &__flipper {
     transform: rotateY(180deg);
   }

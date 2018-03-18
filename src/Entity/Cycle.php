@@ -13,15 +13,20 @@ class Cycle
     public const RESULT_FAILURE = 2;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $completed;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Card")
      * @ORM\JoinColumn(nullable=true)
      */
     private $card;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $completed;
 
     /**
      * @ORM\Id
@@ -51,6 +56,11 @@ class Cycle
      */
     private $subject;
 
+    public function __construct()
+    {
+        $this->created = new \DateTime('now');
+    }
+
     public function getId(): int
     {
         return (int)$this->id;
@@ -69,6 +79,11 @@ class Cycle
     public function getCompleted(): ?\DateTime
     {
         return $this->completed;
+    }
+
+    public function getCreated(): \DateTime
+    {
+        return $this->created;
     }
 
     public function getResult(): ?int

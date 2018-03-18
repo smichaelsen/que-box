@@ -3,15 +3,10 @@
 {% block body %}
 
     <script type="text/javascript">
-        window.initialCycleData = {
-            {{ cycle.id }}: {
-                question: "{{ cycle.question }}",
-                answer: "{{ cycle.answer }}"
-            }
-        };
+        window.cyclesData = {{ cyclesData|raw }};
     </script>
 
-    <div data-cycle="{{ cycle.id }}">
+    <div data-cycle>
     </div>
 
 {% endblock body %}
