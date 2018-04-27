@@ -1,3 +1,7 @@
+subjects:
+    path: /api/subjects/{id}
+    controller: App\Controller\SubjectController::apiEndpointAction
+
 index:
     path: /
     controller: App\Controller\DefaultController::indexAction
@@ -29,4 +33,3 @@ addCard:
 addSubject:
     path: /addSubject
     controller: App\Controller\SubjectController::addAction
-

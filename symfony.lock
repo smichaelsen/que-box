@@ -95,6 +95,9 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
+    "nikic/php-parser": {
+        "version": "v4.0.1"
+    },
     "ocramius/proxy-manager": {
         "version": "2.2.0"
     },
@@ -386,7 +389,7 @@
             "repo": "github.com/symfony/recipes",
             "branch": "master",
             "version": "3.3",
-            "ref": "c72d107d077f1654428edaed69415d0228c1aefe"
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
     },
     "symfony/webpack-encore-pack": {
