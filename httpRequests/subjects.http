@@ -1,42 +1,42 @@
 # Get all subjects
 GET /api/subjects
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Get single subject
 GET /api/subjects/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Create subject
 POST /api/subjects
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 Content-Type: application/json
 {title: "English"}
 
 ###
 # Update subject
 PATCH /api/subjects/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 Content-Type: application/json
 {title: "English"}
 
 ###
 # Delete subject
 DELETE /api/subjects/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Get all cards of a subject
 GET /api/subjects/1/cards
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Get all cards of a subject
 GET /api/subjects/1/cards
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Get a collection of cycles for a subject
 GET /api/subjects/1/cycles
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000

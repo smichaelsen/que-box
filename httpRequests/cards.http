@@ -2,12 +2,12 @@
 
 # Get single card
 GET /api/cards/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 
 ###
 # Create card
 POST /api/cards
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 Content-Type: application/json
 {
   backsideContent: "Hallo Welt",
@@ -19,11 +19,11 @@ Content-Type: application/json
 ###
 # Update card
 PATCH /api/cards/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
 Content-Type: application/json
 {score: 1}
 
 ###
 # Delete card
 DELETE /api/cards/1
-Host: http://127.0.0.1:8000
+Host: 127.0.0.1:8000
