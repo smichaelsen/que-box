@@ -82,4 +82,14 @@ class Subject
         \assert(\in_array($type, [self::TYPE_LANGUAGE, self::TYPE_QUESTIONS], true));
         $this->type = $type;
     }
+
+    public function getPublicResource()
+    {
+        return [
+            'id' => $this->getId(),
+            'targetCyclesPerDay' => $this->getTargetCyclesPerDay(),
+            'title' => $this->getTitle(),
+            'type' => $this->getType(),
+        ];
+    }
 }

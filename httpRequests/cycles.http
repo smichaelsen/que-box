@@ -1,0 +1,12 @@
+# See subjects.http for getting a collection of cycles for a subject
+
+# Get single cycle
+GET /api/cycle/1
+Host: http://127.0.0.1:8000
+
+###
+# Update cycle
+PATCH /api/cycle/1
+Host: http://127.0.0.1:8000
+Content-Type: application/json
+{result: 1}
