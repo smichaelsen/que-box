@@ -11,19 +11,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubjectController extends BaseController
 {
     /**
-     * @Route("/api/subjects", name="getAllSubjects")
+     * @Route("/api/subjects", methods="GET")
      * @return Response
      */
     public function getAllSubjects(): Response
     {
         $subjects = $this->getSubjectRepository()->findAll();
-        return new JsonResponse(['subjects' => array_map(function (Subject $subject) {
+        return new JsonResponse(['subjects' => \array_map(static function (Subject $subject) {
             return $subject->getPublicResource();
         }, $subjects)]);
     }
 
     /**
-     * @Route("/api/subjects/{subjectId}", name="getSingleSubject")
+     * @Route("/api/subjects/{subjectId}", methods="GET")
+     * @param int $subjectId
      * @return Response
      */
     public function getSingleSubject(int $subjectId): Response
@@ -31,8 +32,7 @@ class SubjectController extends BaseController
         $subject = $this->getSubjectRepository()->findOneBy(['id' => $subjectId]);
         if ($subject instanceof Subject) {
             return new JsonResponse(['subject' => $subject->getPublicResource()]);
-        } else {
-            throw new NotFoundHttpException('The subject could not be loaded');
         }
+        throw new NotFoundHttpException('The subject could not be loaded');
     }
 }

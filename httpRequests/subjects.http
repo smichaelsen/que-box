@@ -1,6 +1,7 @@
 # Get all subjects
 GET /api/subjects
 Host: 127.0.0.1:8000
+#Cookie: XDEBUG_SESSION=PHPSTORM
 
 ###
 # Get single subject
