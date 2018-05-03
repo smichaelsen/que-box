@@ -145,4 +145,17 @@ class Cycle
         }
         return $this->getCard()->getBacksideContent();
     }
+
+    public function getPublicResource(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'card' => $this->getCard()->getPublicResource(),
+            'created' => $this->getCreated()->format('U'),
+            'completed' => $this->getCompleted() ? $this->getCompleted()->format('U') : null,
+            'question' => $this->getQuestion(),
+            'answer' => $this->getAnswer(),
+            'subjectId' => $this->getSubject()->getId(),
+        ];
+    }
 }

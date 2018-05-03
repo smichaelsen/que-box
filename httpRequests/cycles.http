@@ -5,8 +5,12 @@ GET /api/cycle/1
 Host: 127.0.0.1:8000
 
 ###
-# Update cycle
-PATCH /api/cycle/1
+# Succeed cycle
+PATCH /api/cycle/1/succeed
 Host: 127.0.0.1:8000
-Content-Type: application/json
-{result: 1}
+
+###
+# Fail cycle
+PATCH /api/cycle/1/fail
+Host: 127.0.0.1:8000
+
