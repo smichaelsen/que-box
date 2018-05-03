@@ -21,14 +21,9 @@ class Subject
     private $id;
 
     /**
-     * @ORM\Column(type="string",unique=true)
-     */
-    private $slug;
-
-    /**
      * @ORM\Column(type="integer")
      */
-    private $targetCyclesPerDay;
+    private $targetCyclesPerDay = 10;
 
     /**
      * @ORM\Column(type="string")
@@ -43,11 +38,6 @@ class Subject
     public function getId(): int
     {
         return (int)$this->id;
-    }
-
-    public function getSlug(): string
-    {
-        return (string)$this->slug;
     }
 
     public function getTargetCyclesPerDay(): int
@@ -68,8 +58,6 @@ class Subject
     public function setTitle(string $title): void
     {
         $this->title = $title;
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($this->title);
     }
 
     public function getType(): int

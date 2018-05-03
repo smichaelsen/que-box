@@ -13,7 +13,8 @@ Host: 127.0.0.1:8000
 POST /api/subjects
 Host: 127.0.0.1:8000
 Content-Type: application/json
-{title: "English"}
+
+{"title": "English"}
 
 ###
 # Update subject
