@@ -29,7 +29,7 @@ Content-Type: application/json
 
 ###
 # Delete subject
-DELETE /api/subjects/1
+DELETE /api/subjects/5
 Host: 127.0.0.1:8000
 
 ###

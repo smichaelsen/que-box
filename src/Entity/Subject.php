@@ -1,7 +1,6 @@
 <?php
 namespace App\Entity;
 
-use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

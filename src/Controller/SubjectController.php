@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace App\Controller;
 
 use App\Entity\Subject;
@@ -8,7 +7,6 @@ use App\Http\NoContentResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SubjectController extends BaseController
@@ -36,7 +34,7 @@ class SubjectController extends BaseController
         if ($subject instanceof Subject) {
             return new JsonResponse(['subject' => $subject->getPublicResource()]);
         }
-        throw new NotFoundHttpException('The subject could not be loaded');
+        return new Response('The subject could not be loaded', 404);
     }
 
     /**
@@ -79,7 +77,24 @@ class SubjectController extends BaseController
             $em->flush();
             return new NoContentResponse();
         }
-        throw new NotFoundHttpException('The subject could not be loaded');
+        return new Response('The subject could not be loaded', 404);
+    }
+
+    /**
+     * @Route("/api/subjects/{subjectId}", methods="DELETE")
+     * @param int $subjectId
+     * @return Response
+     */
+    public function deleteSubject(int $subjectId): Response
+    {
+        $subject = $this->getSubjectRepository()->findOneBy(['id' => $subjectId]);
+        if ($subject instanceof Subject) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($subject);
+            $em->flush();
+            return new NoContentResponse();
+        }
+        return new Response('The subject could not be loaded', 404);
     }
 
     private function fillSubjectWithData(Subject $subject, array $data): Subject
@@ -88,7 +103,7 @@ class SubjectController extends BaseController
             $subject->setTitle($data['title']);
         }
         if (isset($data['targetCyclesPerDay'])) {
-            $subject->setTargetCyclesPerDay((int) $data['targetCyclesPerDay']);
+            $subject->setTargetCyclesPerDay((int)$data['targetCyclesPerDay']);
         }
         return $subject;
     }
