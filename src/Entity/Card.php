@@ -114,6 +114,20 @@ class Card
         $this->lastCycle = new \DateTime('now');
     }
 
+    /**
+     * The weight represents the relative probability of card to be picked for a cycle.
+     * The factors are:
+     *
+     * 1. Days since last cycle (linearly)
+     *    A card that has twice the days since its last cycle than another card is twice as likely to be picked.
+     *    E.g. A card that has 8 days since its last cycle is 4 times as likely to be picked as a card that has 2 days since its last cycle.
+     *
+     * 2. Score (exponentially)
+     *    A card with 1 score point higher is half as likely to be picked.
+     *    E.g. A card with score 1 is 4 times as likely to be picked as a card with score 3.
+     *
+     * @return int
+     */
     public function getWeight(): int
     {
         if ($this->getLastCycle() instanceof \DateTimeInterface) {
