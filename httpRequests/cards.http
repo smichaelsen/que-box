@@ -1,0 +1,29 @@
+# See subjects.http for getting all cards of a subject
+
+# Get single card
+GET /api/cards/1
+Host: 127.0.0.1:8000
+
+###
+# Create card
+POST /api/cards
+Host: 127.0.0.1:8000
+Content-Type: application/json
+{
+  backsideContent: "Hallo Welt",
+  frontsideContent: "Hello World",
+  score: 0,
+  subjectId: 1
+}
+
+###
+# Update card
+PATCH /api/cards/1
+Host: 127.0.0.1:8000
+Content-Type: application/json
+{score: 1}
+
+###
+# Delete card
+DELETE /api/cards/1
+Host: 127.0.0.1:8000

@@ -3,29 +3,47 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Card;
-use App\Entity\Subject;
-use App\Form\CardType;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CardController extends BaseController
 {
-    public function addAction(Request $request, Subject $subject): Response
+    /**
+     * @Route("/api/subjects/{subjectId}/scoreCounts", methods="GET")
+     * @param int $subjectId
+     * @return Response
+     */
+    public function getScoreCountsOfSubject(int $subjectId): Response
     {
-        $viewVariables = [];
-        $newCard = new Card();
-        $newCard->setSubject($subject);
-        $form = $this->createForm(CardType::class, $newCard);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Card $card */
-            $card = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($card);
-            $em->flush();
-            return $this->redirectToRoute('addCard', ['subjectId' => $subject->getId()]);
+        $queryBuilder = $this->getCardRepository()->createQueryBuilder('c');
+        $result = $queryBuilder
+            ->select('COUNT(c.id) as count', 'c.score')
+            ->where('c.subject = :subjectId')
+            ->setParameter('subjectId', $subjectId)
+            ->groupBy('c.score')
+            ->orderBy('c.score')
+            ->getQuery()
+            ->getResult();
+        $scoreCounts = [];
+        foreach ($result as $resultItem) {
+            $scoreCounts[$resultItem['score']] = $resultItem['count'];
         }
-        $viewVariables['newCardForm'] = $form->createView();
-        return $this->render('addCard.html.twig', $viewVariables);
+        ksort($scoreCounts);
+        return new JsonResponse(['scoreCounts' => $scoreCounts]);
+    }
+
+    /**
+     * @Route("/api/subjects/{subjectId}/cards/{score}", methods="GET")
+     * @param int $subjectId
+     * @param int $score
+     * @return Response
+     */
+    public function getCardsOfSubjectByScore(int $subjectId, int $score): Response
+    {
+        $cards = $this->getCardRepository()->findBy(['subject' => $subjectId, 'score' => $score]);
+        return new JsonResponse(['cards' => \array_map(static function (Card $card) {
+            return $card->getPublicResource();
+        }, $cards)]);
     }
 }
