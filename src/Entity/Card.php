@@ -123,4 +123,17 @@ class Card
         }
         return (int)\ceil(1000 * $daysSinceLastCycle / (($this->getScore() + 1) ** 2));
     }
+
+    public function getPublicResource(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'backsideContent' => $this->getBacksideContent(),
+            'created' => $this->getCreated()->format('U'),
+            'frontsideContent' => $this->getFrontsideContent(),
+            'lastCycle' => $this->getLastCycle() ? $this->getLastCycle()->format('U') : null,
+            'score' => $this->getScore(),
+            'subjectId' => $this->getSubject()->getId(),
+        ];
+    }
 }

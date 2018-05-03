@@ -70,7 +70,7 @@ class Subject
         $this->type = $type;
     }
 
-    public function getPublicResource()
+    public function getPublicResource(): array
     {
         return [
             'id' => $this->getId(),

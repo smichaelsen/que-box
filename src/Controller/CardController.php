@@ -3,29 +3,22 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Card;
-use App\Entity\Subject;
-use App\Form\CardType;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CardController extends BaseController
 {
-    public function addAction(Request $request, Subject $subject): Response
+    /**
+     * @Route("/api/subjects/{subjectId}/cards", methods="GET")
+     * @param int $subjectId
+     * @return Response
+     */
+    public function getCardsOfSubject(int $subjectId): Response
     {
-        $viewVariables = [];
-        $newCard = new Card();
-        $newCard->setSubject($subject);
-        $form = $this->createForm(CardType::class, $newCard);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Card $card */
-            $card = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($card);
-            $em->flush();
-            return $this->redirectToRoute('addCard', ['subjectId' => $subject->getId()]);
-        }
-        $viewVariables['newCardForm'] = $form->createView();
-        return $this->render('addCard.html.twig', $viewVariables);
+        $cards = $this->getCardRepository()->findBy(['subject' => $subjectId]);
+        return new JsonResponse(['cards' => \array_map(static function (Card $card) {
+            return $card->getPublicResource();
+        }, $cards)]);
     }
 }
