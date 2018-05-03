@@ -120,6 +120,7 @@ class Card
      *
      * 1. Days since last cycle (linearly)
      *    A card that has twice the days since its last cycle than another card is twice as likely to be picked.
+     *    A card that was not cycled before is assumed to have 100 days since its last cycle for the purpose of this calculation.
      *    E.g. A card that has 8 days since its last cycle is 4 times as likely to be picked as a card that has 2 days since its last cycle.
      *
      * 2. Score (exponentially)
@@ -135,7 +136,7 @@ class Card
         } else {
             $daysSinceLastCycle = 100;
         }
-        return (int)\ceil(1000 * $daysSinceLastCycle / (($this->getScore() + 1) ** 2));
+        return (int)\ceil(1000 * $daysSinceLastCycle / (2 ** ($this->getScore() + 1)));
     }
 
     public function getPublicResource(): array
