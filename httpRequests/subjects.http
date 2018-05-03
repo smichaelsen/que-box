@@ -18,10 +18,14 @@ Content-Type: application/json
 
 ###
 # Update subject
-PATCH /api/subjects/1
+PATCH /api/subjects/5
 Host: 127.0.0.1:8000
 Content-Type: application/json
-{title: "English"}
+
+{
+  "title": "Englisch",
+  "targetCyclesPerDay": 15
+}
 
 ###
 # Delete subject
