@@ -5,23 +5,27 @@ GET /api/cards/4
 Host: 127.0.0.1:8000
 
 ###
-# Create card
+# Create card ✅
 POST /api/cards
 Host: 127.0.0.1:8000
 Content-Type: application/json
+
 {
-  backsideContent: "Hallo Welt",
-  frontsideContent: "Hello World",
-  score: 0,
-  subjectId: 1
+  "backsideContent": "Hallo Welt",
+  "frontsideContent": "Hello World",
+  "subjectId": 1
 }
 
 ###
 # Update card
-PATCH /api/cards/1
+PATCH /api/cards/21
 Host: 127.0.0.1:8000
 Content-Type: application/json
-{score: 1}
+
+{
+  "backsideContent": "Hallo Welt!",
+  "frontsideContent": "Hello World!"
+}
 
 ###
 # Delete card
