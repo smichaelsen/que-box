@@ -24,17 +24,13 @@ class SubjectController extends BaseController
     }
 
     /**
-     * @Route("/api/subjects/{subjectId}", methods="GET")
-     * @param int $subjectId
+     * @Route("/api/subjects/{subject}", methods="GET")
+     * @param Subject $subject
      * @return Response
      */
-    public function getSingleSubject(int $subjectId): Response
+    public function getSingleSubject(Subject $subject): Response
     {
-        $subject = $this->getSubjectRepository()->findOneBy(['id' => $subjectId]);
-        if ($subject instanceof Subject) {
-            return new JsonResponse(['subject' => $subject->getPublicResource()]);
-        }
-        return new Response('The subject could not be loaded', 404);
+        return new JsonResponse(['subject' => $subject->getPublicResource()]);
     }
 
     /**
@@ -58,43 +54,35 @@ class SubjectController extends BaseController
     }
 
     /**
-     * @Route("/api/subjects/{subjectId}", methods="PATCH")
+     * @Route("/api/subjects/{subject}", methods="PATCH")
      * @param Request $request
-     * @param int $subjectId
+     * @param Subject $subject
      * @return Response
      */
-    public function updateSubject(Request $request, int $subjectId): Response
+    public function updateSubject(Request $request, Subject $subject): Response
     {
-        $subject = $this->getSubjectRepository()->findOneBy(['id' => $subjectId]);
-        if ($subject instanceof Subject) {
-            $data = \json_decode($request->getContent(), true);
-            $subject = $this->fillSubjectWithData($subject, $data);
-            if ($this->validateSubject($subject) !== true) {
-                return new JsonResponse([], 400);
-            }
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($subject);
-            $em->flush();
-            return new NoContentResponse();
+        $data = \json_decode($request->getContent(), true);
+        $subject = $this->fillSubjectWithData($subject, $data);
+        if ($this->validateSubject($subject) !== true) {
+            return new JsonResponse([], 400);
         }
-        return new Response('The subject could not be loaded', 404);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($subject);
+        $em->flush();
+        return new NoContentResponse();
     }
 
     /**
-     * @Route("/api/subjects/{subjectId}", methods="DELETE")
-     * @param int $subjectId
+     * @Route("/api/subjects/{subject}", methods="DELETE")
+     * @param Subject $subject
      * @return Response
      */
-    public function deleteSubject(int $subjectId): Response
+    public function deleteSubject(Subject $subject): Response
     {
-        $subject = $this->getSubjectRepository()->findOneBy(['id' => $subjectId]);
-        if ($subject instanceof Subject) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($subject);
-            $em->flush();
-            return new NoContentResponse();
-        }
-        return new Response('The subject could not be loaded', 404);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($subject);
+        $em->flush();
+        return new NoContentResponse();
     }
 
     private function fillSubjectWithData(Subject $subject, array $data): Subject

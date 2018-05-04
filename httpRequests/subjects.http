@@ -1,15 +1,15 @@
-# Get all subjects
+# Get all subjects ✅
 GET /api/subjects
 Host: 127.0.0.1:8000
 #Cookie: XDEBUG_SESSION=PHPSTORM
 
 ###
-# Get single subject
+# Get single subject ✅
 GET /api/subjects/1
 Host: 127.0.0.1:8000
 
 ###
-# Create subject
+# Create subject ✅
 POST /api/subjects
 Host: 127.0.0.1:8000
 Content-Type: application/json
@@ -17,7 +17,7 @@ Content-Type: application/json
 {"title": "English"}
 
 ###
-# Update subject
+# Update subject ✅
 PATCH /api/subjects/5
 Host: 127.0.0.1:8000
 Content-Type: application/json
@@ -28,27 +28,27 @@ Content-Type: application/json
 }
 
 ###
-# Delete subject
+# Delete subject ✅
 DELETE /api/subjects/5
 Host: 127.0.0.1:8000
 
 ###
-# Get all cards of a subject
+# Get all cards of a subject ✅
 GET /api/subjects/1/cards
 Host: 127.0.0.1:8000
 
 ###
-# Get score counts for a subject
+# Get score counts for a subject ✅
 GET /api/subjects/1/scoreCounts
 Host: 127.0.0.1:8000
 
 ###
-# Get all cards of a subject by score
+# Get all cards of a subject by score ✅
 GET /api/subjects/1/cards/3
 Host: 127.0.0.1:8000
 
 ###
-# Get a collection of cycles for a subject
+# Get a collection of cycles for a subject ✅
 GET /api/subjects/1/cycles
 Host: 127.0.0.1:8000
 

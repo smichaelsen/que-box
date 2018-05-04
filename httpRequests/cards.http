@@ -1,7 +1,7 @@
 # See subjects.http for getting all cards of a subject
 
-# Get single card
-GET /api/cards/1
+# Get single card ✅
+GET /api/cards/4
 Host: 127.0.0.1:8000
 
 ###

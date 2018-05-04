@@ -45,7 +45,7 @@ class CycleController extends BaseController
      * @param int $limit
      * @return array|Card[]
      */
-    protected function getShuffledCards(Subject $subject, int $limit = 0): array
+    private function getShuffledCards(Subject $subject, int $limit = 0): array
     {
         $cardsPool = new ArrayCollection(
             $this->getCardRepository()->findCardsNotCycledToday($subject)
