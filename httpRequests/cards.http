@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ###
-# Update card
+# Update card ✅
 PATCH /api/cards/21
 Host: 127.0.0.1:8000
 Content-Type: application/json
@@ -28,6 +28,8 @@ Content-Type: application/json
 }
 
 ###
-# Delete card
-DELETE /api/cards/1
+# Delete card ✅
+DELETE /api/cards/21
 Host: 127.0.0.1:8000
+
+###

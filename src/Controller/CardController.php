@@ -62,6 +62,19 @@ class CardController extends BaseController
     }
 
     /**
+     * @Route("/api/cards/{card}", methods="DELETE")
+     * @param Card $card
+     * @return Response
+     */
+    public function deleteCard(Card $card): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($card);
+        $em->flush();
+        return new NoContentResponse();
+    }
+
+    /**
      * @Route("/api/subjects/{subject}/scoreCounts", methods="GET")
      * @param Subject $subject
      * @return Response
