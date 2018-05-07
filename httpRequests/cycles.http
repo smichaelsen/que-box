@@ -1,16 +1,11 @@
 # See subjects.http for getting a collection of cycles for a subject
 
-# Get single cycle
-GET /api/cycle/1
+###
+# Succeed cycle ✅
+PATCH /api/cycle/49/succeed
 Host: 127.0.0.1:8000
 
 ###
-# Succeed cycle
-PATCH /api/cycle/1/succeed
-Host: 127.0.0.1:8000
-
-###
-# Fail cycle
+# Fail cycle ✅
 PATCH /api/cycle/1/fail
 Host: 127.0.0.1:8000
-

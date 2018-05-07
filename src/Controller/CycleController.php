@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Card;
 use App\Entity\Cycle;
 use App\Entity\Subject;
+use App\Http\NoContentResponse;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,34 @@ class CycleController extends BaseController
         return new JsonResponse(['cycles' => \array_map(static function (Cycle $cycle) {
             return $cycle->getPublicResource();
         }, $activeCycles)]);
+    }
+
+    /**
+     * @Route("/api/cycle/{cycle}/succeed", methods="PATCH")
+     * @param Cycle $cycle
+     * @return Response
+     */
+    public function succeedCycle(Cycle $cycle): Response
+    {
+        $cycle->succeed();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cycle);
+        $em->flush();
+        return new NoContentResponse();
+    }
+
+    /**
+     * @Route("/api/cycle/{cycle}/fail", methods="PATCH")
+     * @param Cycle $cycle
+     * @return Response
+     */
+    public function failCycle(Cycle $cycle): Response
+    {
+        $cycle->fail();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cycle);
+        $em->flush();
+        return new NoContentResponse();
     }
 
     /**
