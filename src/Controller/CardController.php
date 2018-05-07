@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Card;
 use App\Entity\Subject;
+use App\Http\NoContentResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +40,25 @@ class CardController extends BaseController
         $em->persist($card);
         $em->flush();
         return new JsonResponse(['card' => $card->getPublicResource()], 201);
+    }
+
+    /**
+     * @Route("/api/cards/{card}", methods="PATCH")
+     * @param Request $request
+     * @param Card $card
+     * @return Response
+     */
+    public function updateCard(Request $request, Card $card): Response
+    {
+        $data = \json_decode($request->getContent(), true);
+        $card = $this->fillCardWithData($card, $data);
+        if ($this->validateCard($card) !== true) {
+            return new JsonResponse([], 400);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($card);
+        $em->flush();
+        return new NoContentResponse();
     }
 
     /**
